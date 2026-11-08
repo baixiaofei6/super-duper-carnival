@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>局域网聊天</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="logo">LAN</div>
+          <div>
+            <h1>局域网聊天</h1>
+            <p>局域网内即时沟通与分享</p>
+          </div>
+        </div>
+
+        <div class="profile">
+          <div class="avatar" id="avatar">U</div>
+          <div class="profile-info">
+            <div class="profile-name" id="profileName">未设置</div>
+            <div class="profile-status" id="profileStatus">未登录</div>
+          </div>
+          <button id="editName">编辑</button>
+        </div>
+
+        <div class="search-bar">
+          <input id="globalSearch" type="text" placeholder="搜索会话或联系人" />
+        </div>
+
+        <div class="nav-tabs">
+          <button class="active" data-view="chats">会话</button>
+          <button data-view="contacts">联系人</button>
+          <button data-view="settings">设置</button>
+          <button data-view="admin">管理</button>
+        </div>
+
+        <div class="view" id="viewChats">
+          <div class="section">
+            <div class="section-title">
+              <span>群聊</span>
+              <button id="createRoom">新建</button>
+            </div>
+            <div class="list" id="roomList"></div>
+          </div>
+          <div class="section">
+            <div class="section-title">
+              <span>私聊</span>
+              <button id="startDm">发起</button>
+            </div>
+            <div class="list" id="dmList"></div>
+          </div>
+        </div>
+
+        <div class="view hidden" id="viewContacts">
+          <div class="section-title">在线联系人</div>
+          <div class="list" id="contactList"></div>
+        </div>
+
+        <div class="view hidden" id="viewSettings">
+          <div class="setting-item">
+            <div>
+              <div class="setting-title">自动滚动</div>
+              <div class="setting-desc">新消息到达时自动滚动到最新</div>
+            </div>
+            <input id="settingAutoScroll" type="checkbox" />
+          </div>
+          <div class="setting-item">
+            <div>
+              <div class="setting-title">显示时间</div>
+              <div class="setting-desc">在消息中显示发送时间</div>
+            </div>
+            <input id="settingShowTime" type="checkbox" />
+          </div>
+          <div class="setting-item">
+            <div>
+              <div class="setting-title">紧凑模式</div>
+              <div class="setting-desc">更密集的聊天排列</div>
+            </div>
+            <input id="settingCompact" type="checkbox" />
+          </div>
+          <div class="setting-item">
+            <div>
+              <div class="setting-title">桌面通知</div>
+              <div class="setting-desc">窗口失焦时显示通知</div>
+            </div>
+            <input id="settingNotify" type="checkbox" />
+          </div>
+        </div>
+
+        <div class="view hidden" id="viewAdmin">
+          <div class="admin-panel">
+            <div class="admin-login" id="adminLogin">
+              <input id="adminUser" type="text" placeholder="管理员账号" />
+              <input id="adminPass" type="password" placeholder="管理员密码" />
+              <button id="adminLoginBtn" type="button">登录</button>
+            </div>
+            <div class="admin-status hidden" id="adminStatus">
+              <div>已登录：<span id="adminName">管理员</span></div>
+              <button id="adminLogout" type="button">退出管理员</button>
+            </div>
+            <div class="admin-bot hidden" id="adminBotConfig">
+              <h4>小欧机器人</h4>
+              <label class="bot-toggle">
+                <input id="botEnabled" type="checkbox" />
+                <span>启用机器人</span>
+              </label>
+              
+              <!-- 新增：机器人昵称输入框 -->
+              <input id="botName" type="text" placeholder="机器人昵称 (如：小欧)" />
+
+              <input id="botApiUrl" type="text" placeholder="API 地址（如 /v1/chat/completions）" />
+              <input id="botApiKey" type="password" placeholder="API Key" />
+              <input id="botModel" type="text" placeholder="模型名称（如 gpt-4o-mini）" />
+              <label class="bot-toggle">
+                <input id="botProactiveEnabled" type="checkbox" />
+                <span>允许主动发言</span>
+              </label>
+              <div class="bot-grid">
+                <label>回复概率
+                  <input id="botReplyProbability" type="number" min="0" max="1" step="0.05" />
+                </label>
+                <label>主动发言概率
+                  <input id="botProactiveProbability" type="number" min="0" max="1" step="0.05" />
+                </label>
+              </div>
+              <textarea id="botSystemPrompt" rows="4" placeholder="机器人系统提示词"></textarea>
+              <button id="botSaveBtn" type="button">保存机器人配置</button>
+              <div class="admin-tip" id="botStatusText">群聊中 @小欧 可触发回复。</div>
+            </div>
+            <button id="adminClearHistory" class="admin-danger hidden" type="button">清空服务器历史记录</button>
+            <div class="admin-tip">清空后会删除服务器聊天记录和已上传文件，请谨慎操作</div>
+            <div class="admin-tip">管理员可禁言或踢出用户</div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="chat-panel">
+        <header class="chat-header">
+          <div class="chat-title">
+            <h2 id="activeTitle">大厅</h2>
+            <div class="chat-meta" id="activeMeta">群聊</div>
+          </div>
+          <div class="chat-actions">
+            <input id="messageSearch" type="text" placeholder="搜索聊天记录" />
+            <button id="searchBtn">搜索</button>
+            <button id="exportChat">导出</button>
+            <button id="clearChat">清屏</button>
+          </div>
+        </header>
+        <div class="messages" id="messages"></div>
+        <div class="composer">
+          <div class="emoji-bar" id="emojiBar">
+            <button data-emoji="😀">😀</button>
+            <button data-emoji="😂">😂</button>
+            <button data-emoji="👍">👍</button>
+            <button data-emoji="🎉">🎉</button>
+            <button data-emoji="❤️">❤️</button>
+          </div>
+          <form id="chatForm" class="composer-row">
+            <input
+              id="chatInput"
+              type="text"
+              placeholder="输入消息，回车发送"
+              autocomplete="off"
+              disabled
+            />
+            <label class="file-btn">
+              <input id="fileInput" type="file" hidden />
+              上传
+            </label>
+            <button id="sendBtn" type="submit" disabled>发送</button>
+          </form>
+          <div class="upload-progress" id="uploadProgress">
+            <div class="bar" id="uploadBar"></div>
+            <div class="label" id="uploadLabel">上传中 0%</div>
+          </div>
+          <div class="composer-tip" id="composerTip">消息草稿会自动保存在当前设备。</div>
+        </div>
+      </main>
+
+      <aside class="side-panel">
+        <div class="panel-section">
+          <h3>会话信息</h3>
+          <div id="conversationInfo" class="info-box"></div>
+        </div>
+        <div class="panel-section">
+          <h3>在线用户</h3>
+          <div id="memberList" class="info-list"></div>
+        </div>
+        <div class="panel-section">
+          <h3>共享文件</h3>
+          <div id="sharedFiles" class="info-list"></div>
+        </div>
+        <div class="panel-section">
+          <h3>搜索结果</h3>
+          <div id="searchResults" class="info-list"></div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <div class="overlay drop-overlay hidden" id="dropOverlay">松开即可上传文件</div>
+
+    <div class="overlay hidden" id="loginOverlay">
+      <div class="login-card">
+        <h2 id="loginTitle">请输入用户名</h2>
+        <p id="loginDesc">设置用户名后才能进入聊天并上传文件。</p>
+        <input id="loginName" type="text" placeholder="例如：小明" />
+        <button id="loginButton" type="button">进入聊天</button>
+        <div class="login-tip">昵称最长 24 个字符。</div>
+      </div>
+    </div>
+
+    <div class="modal hidden" id="modal">
+      <div class="modal-card">
+        <h3 id="modalTitle">标题</h3>
+        <p id="modalDesc">说明</p>
+        <input id="modalInput" type="text" placeholder="请输入" />
+        <div class="modal-actions">
+          <button id="modalCancel">取消</button>
+          <button id="modalConfirm">确定</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay hidden" id="imageViewer">
+      <div class="image-viewer-card">
+        <button id="imageViewerClose" type="button">关闭</button>
+        <img id="imageViewerImg" alt="图片预览" />
+        <a id="imageViewerOpen" target="_blank" rel="noopener">在新窗口打开</a>
+      </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
