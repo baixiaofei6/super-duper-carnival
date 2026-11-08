@@ -1,0 +1,60 @@
+{
+  "edge": "Edg/157.0.4341.42",
+  "before": {
+    "maxDisp": 0,
+    "animating": false
+  },
+  "pushed": {
+    "maxDisp": 77.39,
+    "hit": 579,
+    "forceActive": true,
+    "lastPush": {
+      "hit": 579,
+      "avg": 33.67,
+      "x": 693,
+      "y": 204.400146484375,
+      "at": 2817.2999999821186
+    }
+  },
+  "decay": [
+    {
+      "wait": 250,
+      "maxDisp": 2.32,
+      "forceActive": false,
+      "animating": true,
+      "impulseLeft": 0
+    },
+    {
+      "wait": 450,
+      "maxDisp": 0.32,
+      "forceActive": false,
+      "animating": false,
+      "impulseLeft": 0
+    },
+    {
+      "wait": 800,
+      "maxDisp": 0.32,
+      "forceActive": false,
+      "animating": false,
+      "impulseLeft": 0
+    },
+    {
+      "wait": 1200,
+      "maxDisp": 0.32,
+      "forceActive": false,
+      "animating": false,
+      "impulseLeft": 0
+    }
+  ],
+  "settled": {
+    "maxDisp": 0.32,
+    "forceActive": false,
+    "animating": false
+  },
+  "returned": true,
+  "errors": [],
+  "shots": {
+    "scattered": 531160,
+    "returned": 527967
+  }
+}

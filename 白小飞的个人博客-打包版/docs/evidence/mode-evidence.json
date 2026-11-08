@@ -1,0 +1,134 @@
+{
+  "edge": "Edg/157.0.4341.42",
+  "health": 200,
+  "shots": [
+    {
+      "name": "before-mode-light.png",
+      "bytes": 471446,
+      "errors": []
+    },
+    {
+      "name": "mode-light.png",
+      "bytes": 523315,
+      "errors": []
+    },
+    {
+      "name": "mode-dark.png",
+      "bytes": 471470,
+      "errors": []
+    },
+    {
+      "name": "mode-auto.png",
+      "bytes": 471446,
+      "errors": []
+    },
+    {
+      "name": "guestbook-visible.png",
+      "bytes": 57398,
+      "errors": []
+    },
+    {
+      "name": "admin-login.png",
+      "bytes": 58991,
+      "errors": []
+    },
+    {
+      "name": "admin-logged.png",
+      "bytes": 77162,
+      "errors": []
+    },
+    {
+      "name": "admin-settings.png",
+      "bytes": 120293,
+      "errors": []
+    },
+    {
+      "name": "admin-guestbook.png",
+      "bytes": 83367,
+      "errors": []
+    },
+    {
+      "name": "admin-account.png",
+      "bytes": 87814,
+      "errors": []
+    }
+  ],
+  "modeStates": [
+    {
+      "clicked": "light",
+      "mode": "light",
+      "theme": "light",
+      "bg": "rgb(252, 250, 248)",
+      "ink": "rgb(31, 35, 41)",
+      "stored": "light"
+    },
+    {
+      "clicked": "dark",
+      "mode": "dark",
+      "theme": "dark",
+      "bg": "rgb(13, 20, 28)",
+      "ink": "rgb(232, 241, 248)",
+      "stored": "dark"
+    },
+    {
+      "clicked": "auto",
+      "mode": "auto",
+      "theme": "dark",
+      "bg": "rgb(13, 20, 28)",
+      "ink": "rgb(232, 241, 248)",
+      "stored": "auto"
+    }
+  ],
+  "autoDark": {
+    "mode": "auto",
+    "theme": "dark"
+  },
+  "guestbook": {
+    "status": 201,
+    "ok": true,
+    "visible": 0,
+    "text": "",
+    "hash": "#/guestbook"
+  },
+  "mainDom": {
+    "adminLinks": 0,
+    "title": "白小飞的个人博客",
+    "switchButtons": 3,
+    "guestbookLink": true
+  },
+  "admin": {
+    "login": 200,
+    "user": {
+      "id": "4e59c62c51e09ef6416d",
+      "nickname": "白小飞",
+      "avatar": ""
+    },
+    "settings": true,
+    "mode": "dark",
+    "guestbook": 1
+  },
+  "adminDom": {
+    "status": "已登录：白小飞（管理员）· 全部自定义功能已解锁",
+    "tabs": 8,
+    "workHidden": false,
+    "loginHidden": true,
+    "theme": "dark"
+  },
+  "guestbookFinal": {
+    "before": {
+      "items": 0,
+      "hash": "#/guestbook",
+      "nick": true,
+      "text": true,
+      "btn": true
+    },
+    "after": {
+      "items": 1,
+      "text": "鲸鱼访客2026-11-07全员可见的第一条留言",
+      "toast": "留言已发表，所有人可见",
+      "count": "共 1 条 · 全员可见"
+    },
+    "errors": [],
+    "shotBytes": 89428
+  }
+}

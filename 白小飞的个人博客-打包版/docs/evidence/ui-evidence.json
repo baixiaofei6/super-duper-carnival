@@ -1,0 +1,277 @@
+{
+  "shots": [
+    {
+      "name": "before-home.png",
+      "bytes": 97880,
+      "page": {
+        "title": "粒子文字 Hero · 鼠标反馈原型",
+        "hash": "",
+        "url": "file:///E:/%E6%96%87%E6%A1%A3/deepseek-harness/default-workspace/particle-demo.h",
+        "text": "这是一张「动态效果原型」，不是官网截图 · 粒子参数来自 mimo.mi.com 主 JS chunk 的核实结果 · 登录与上传为前端占位示意\n林间\n文章\n项目\n此刻\n关于\n登录\n你好，我是林间\n写字，做东西，慢慢来\n",
+        "cards": 6,
+        "visibleSections": 3,
+        "meHidden": null,
+        "adminHidden": null
+      },
+      "errors": []
+    },
+    {
+      "name": "after-home.png",
+      "bytes": 96573,
+      "page": {
+        "title": "林间 · 个人博客",
+        "hash": "",
+        "url": "http://127.0.0.1:8793/",
+        "text": "与你同行，探索一点有意思的事 · 本地运行版 · 登录与上传已接真实接口（dev 体验模式）\n林间\n文章\n项目\n关于\n后台\n登录\n你好，我是林间\n写字，做东西，慢慢来\n读我的文章\n看看我做的\n把鼠标扫过文字 → 粒子会朝",
+        "cards": 9,
+        "visibleSections": 1,
+        "meHidden": true,
+        "adminHidden": null
+      },
+      "errors": []
+    },
+    {
+      "name": "before-about.png",
+      "bytes": 77632,
+      "page": {
+        "title": "粒子文字 Hero · 鼠标反馈原型",
+        "hash": "#about",
+        "url": "file:///E:/%E6%96%87%E6%A1%A3/deepseek-harness/default-workspace/particle-demo.h",
+        "text": "这是一张「动态效果原型」，不是官网截图 · 粒子参数来自 mimo.mi.com 主 JS chunk 的核实结果 · 登录与上传为前端占位示意\n林间\n文章\n项目\n此刻\n关于\n登录\n你好，我是林间\n写字，做东西，慢慢来\n",
+        "cards": 6,
+        "visibleSections": 3,
+        "meHidden": null,
+        "adminHidden": null
+      },
+      "errors": []
+    },
+    {
+      "name": "after-about.png",
+      "bytes": 68023,
+      "page": {
+        "title": "林间 · 个人博客",
+        "hash": "#/about",
+        "url": "http://127.0.0.1:8793/#/about",
+        "text": "与你同行，探索一点有意思的事 · 本地运行版 · 登录与上传已接真实接口（dev 体验模式）\n林间\n文章\n项目\n关于\n后台\n截图验收 · 管理员\n退出\n关于这个站点\n\n这里是我的个人博客。写一点技术笔记，记一些做过的东西",
+        "cards": 9,
+        "visibleSections": 1,
+        "meHidden": false,
+        "adminHidden": null
+      },
+      "errors": []
+    },
+    {
+      "name": "after-notes.png",
+      "bytes": 68858,
+      "page": {
+        "title": "林间 · 个人博客",
+        "hash": "#/notes",
+        "url": "http://127.0.0.1:8793/#/notes",
+        "text": "与你同行，探索一点有意思的事 · 本地运行版 · 登录与上传已接真实接口（dev 体验模式）\n林间\n文章\n项目\n关于\n后台\n截图验收 · 管理员\n退出\n全部文章\n\n共 4 篇\n\n粒子文字与鼠标力场\n\n从官网 JS 里抠出",
+        "cards": 9,
+        "visibleSections": 1,
+        "meHidden": false,
+        "adminHidden": null
+      },
+      "errors": []
+    },
+    {
+      "name": "after-admin.png",
+      "bytes": 55671,
+      "page": {
+        "title": "林间 · 后台管理",
+        "hash": "",
+        "url": "http://127.0.0.1:8793/admin",
+        "text": "林间\n后台管理\n截图验收\n回前台\n后台\n\n本地开发态：首次 dev 登录的用户自动是管理员。公网部署前必须关闭 dev 并绑定 config.admin。\n\n已登录：截图验收（管理员）\n本地 dev 登录\n登录\n退出\n概",
+        "cards": 0,
+        "visibleSections": 3,
+        "meHidden": null,
+        "adminHidden": false
+      },
+      "errors": []
+    }
+  ],
+  "pixelStats": {
+    "before-home.png": {
+      "size": [
+        1440,
+        900
+      ],
+      "top": [
+        {
+          "color": "#fcfaf8",
+          "pct": 82.9
+        },
+        {
+          "color": "#000000",
+          "pct": 3.7
+        },
+        {
+          "color": "#fcfcfc",
+          "pct": 0.7
+        },
+        {
+          "color": "#fb8147",
+          "pct": 0.5
+        },
+        {
+          "color": "#8b8b8b",
+          "pct": 0.2
+        }
+      ],
+      "heroInkPct": 1.05,
+      "fullInkPct": 16.08
+    },
+    "after-home.png": {
+      "size": [
+        1440,
+        900
+      ],
+      "top": [
+        {
+          "color": "#fcfaf8",
+          "pct": 82.8
+        },
+        {
+          "color": "#000000",
+          "pct": 3.7
+        },
+        {
+          "color": "#fcfcfc",
+          "pct": 0.7
+        },
+        {
+          "color": "#fb8147",
+          "pct": 0.5
+        },
+        {
+          "color": "#8b8b8b",
+          "pct": 0.3
+        }
+      ],
+      "heroInkPct": 1.13,
+      "fullInkPct": 16.04
+    },
+    "before-about.png": {
+      "size": [
+        1440,
+        900
+      ],
+      "top": [
+        {
+          "color": "#fcfaf8",
+          "pct": 55.8
+        },
+        {
+          "color": "#f3ede8",
+          "pct": 29.7
+        },
+        {
+          "color": "#000000",
+          "pct": 10.5
+        },
+        {
+          "color": "#fcfcfc",
+          "pct": 0.7
+        },
+        {
+          "color": "#f0ebe5",
+          "pct": 0.6
+        }
+      ],
+      "heroInkPct": 3.05,
+      "fullInkPct": 12.71
+    },
+    "after-about.png": {
+      "size": [
+        1440,
+        900
+      ],
+      "top": [
+        {
+          "color": "#fcfaf8",
+          "pct": 64.5
+        },
+        {
+          "color": "#f3ede8",
+          "pct": 21.3
+        },
+        {
+          "color": "#000000",
+          "pct": 10.4
+        },
+        {
+          "color": "#f0ebe5",
+          "pct": 0.7
+        },
+        {
+          "color": "#8b8b8b",
+          "pct": 0.6
+        }
+      ],
+      "heroInkPct": 3.34,
+      "fullInkPct": 12.67
+    },
+    "after-notes.png": {
+      "size": [
+        1440,
+        900
+      ],
+      "top": [
+        {
+          "color": "#fcfaf8",
+          "pct": 53.4
+        },
+        {
+          "color": "#f3ede8",
+          "pct": 29.4
+        },
+        {
+          "color": "#000000",
+          "pct": 14.3
+        },
+        {
+          "color": "#f0ebe5",
+          "pct": 1
+        },
+        {
+          "color": "#666666",
+          "pct": 0.1
+        }
+      ],
+      "heroInkPct": 2.03,
+      "fullInkPct": 16.07
+    },
+    "after-admin.png": {
+      "size": [
+        1440,
+        900
+      ],
+      "top": [
+        {
+          "color": "#fcfaf8",
+          "pct": 53.9
+        },
+        {
+          "color": "#f3ede8",
+          "pct": 42.6
+        },
+        {
+          "color": "#f0ebe5",
+          "pct": 0.9
+        },
+        {
+          "color": "#fcfcfc",
+          "pct": 0.6
+        },
+        {
+          "color": "#8b8b8b",
+          "pct": 0.4
+        }
+      ],
+      "heroInkPct": 2.63,
+      "fullInkPct": 1.76
+    }
+  },
+  "cors": {}
+}

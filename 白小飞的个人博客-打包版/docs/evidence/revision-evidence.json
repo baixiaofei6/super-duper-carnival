@@ -1,0 +1,170 @@
+{
+  "edge": "Edg/157.0.4341.42",
+  "health": 200,
+  "screenshots": [
+    {
+      "name": "before-home.png",
+      "bytes": 97880,
+      "errors": []
+    },
+    {
+      "name": "after-home.png",
+      "bytes": 508553,
+      "errors": []
+    },
+    {
+      "name": "before-particle-force.png",
+      "bytes": 508553,
+      "errors": []
+    },
+    {
+      "name": "after-particle-force.png",
+      "bytes": 508553,
+      "errors": []
+    },
+    {
+      "name": "after-admin-logged.png",
+      "bytes": 88527,
+      "errors": []
+    },
+    {
+      "name": "after-admin-settings.png",
+      "bytes": 109606,
+      "errors": []
+    },
+    {
+      "name": "after-admin-layout.png",
+      "bytes": 105139,
+      "errors": []
+    }
+  ],
+  "force": {
+    "heroBox": {
+      "left": 82.5,
+      "top": 112,
+      "width": 1260,
+      "height": 520,
+      "cx": 712.5,
+      "cy": 330.4
+    },
+    "activeBefore": false,
+    "activeAfter": true,
+    "radius": 170,
+    "strength": 96,
+    "hitParticles": 516,
+    "avgPushDistance": 36.99,
+    "avgDisplacementBefore": 0,
+    "avgDisplacementAfter": 14.9,
+    "probeAfter": {
+      "active": true,
+      "x": 745,
+      "y": 228.80459594726562,
+      "sx": 520,
+      "sy": 218.39999389648438,
+      "radius": 170,
+      "strength": 96,
+      "trail": 0.42,
+      "count": 1136,
+      "hit": 516,
+      "avg": 36.99,
+      "lastPush": {
+        "hit": 516,
+        "avg": 36.99,
+        "x": 745,
+        "y": 228.80459594726562
+      }
+    }
+  },
+  "admin": {
+    "login": 200,
+    "settings": true,
+    "layout": true,
+    "bootName": "白小飞的个人博客",
+    "bootAccent": "#49b1f5",
+    "bootRadius": 170,
+    "firstModule": "updates",
+    "modules": 8
+  },
+  "homeDom": {
+    "title": "白小飞的个人博客",
+    "name": "白小飞的个人博客",
+    "groups": 6,
+    "richCards": 17,
+    "accent": "#49b1f5",
+    "glow": "on",
+    "glass": "on",
+    "grid": "on"
+  },
+  "adminDom": {
+    "tabs": 6,
+    "status": "已登录：视觉验收（管理员）· 全部自定义功能已解锁",
+    "workHidden": false,
+    "settingFields": 21
+  },
+  "pixelStats": {
+    "beforeHome": {
+      "size": [
+        1440,
+        900
+      ],
+      "uniqueColorsSampled": 806,
+      "dominantColorPct": 82.4
+    },
+    "afterHome": {
+      "size": [
+        1440,
+        900
+      ],
+      "uniqueColorsSampled": 2371,
+      "dominantColorPct": 14
+    },
+    "force": {
+      "heroChangedPct": 0,
+      "sampledPx": 180000
+    }
+  },
+  "cleanup": {
+    "nodeServers": "stopped",
+    "debugEdge": "stopped",
+    ".verify-final2-1794038302142": "EPERM, Permission denied: \\\\?\\E:\\ÎÄµµ\\deepseek-harness\\default-workspace\\.verify"
+  },
+  "forceFinal": {
+    "edge": "Edg/157.0.4341.42",
+    "health": 200,
+    "hero": {
+      "left": 82.5,
+      "top": 112,
+      "cx": 712.5,
+      "cy": 330.4,
+      "reduced": true,
+      "canvasDisplay": "block",
+      "fallbackHidden": true
+    },
+    "probe": {
+      "active": true,
+      "x": 738,
+      "y": 199.17205810546875,
+      "sx": 500,
+      "sy": 218.39999389648438,
+      "radius": 170,
+      "strength": 96,
+      "trail": 0.42,
+      "count": 1136,
+      "hit": 535,
+      "avg": 35.48,
+      "lastPush": {
+        "hit": 535,
+        "avg": 35.48,
+        "x": 738,
+        "y": 199.17205810546875
+      }
+    },
+    "heroChangedPct": 1.06,
+    "sampledPx": 180000,
+    "errors": [],
+    "forceShotBytes": {
+      "before": 518577,
+      "after": 534147
+    }
+  }
+}

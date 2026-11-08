@@ -1,0 +1,100 @@
+{
+  "edge": "Edg/157.0.4341.42",
+  "states": {
+    "light": {
+      "theme": "light",
+      "probe": {
+        "active": false,
+        "x": 630,
+        "y": 260,
+        "sx": 630,
+        "sy": 260,
+        "radius": 170,
+        "strength": 96,
+        "trail": 0.42,
+        "count": 1136,
+        "hit": 0,
+        "avg": 0,
+        "lastPush": null,
+        "dark": false,
+        "glow": 0,
+        "color": "#fb8147"
+      },
+      "ptFilter": "none",
+      "subColor": "rgb(102, 102, 102)"
+    },
+    "dark": {
+      "theme": "dark",
+      "probe": {
+        "active": false,
+        "x": 630,
+        "y": 260,
+        "sx": 630,
+        "sy": 260,
+        "radius": 170,
+        "strength": 96,
+        "trail": 0.42,
+        "count": 1136,
+        "hit": 0,
+        "avg": 0,
+        "lastPush": null,
+        "dark": true,
+        "glow": 12,
+        "color": "#7dd8ff"
+      },
+      "ptFilter": "drop-shadow(rgba(125, 216, 255, 0.75) 0px 0px 5px) drop-shadow(rgba(73, 177, 245, 0.42) 0px 0px 14px)",
+      "subColor": "rgb(232, 247, 255)",
+      "subShadow": "rgba(125, 216, 255, 0.9) 0px 0px 8px, rgba(73, 177, 245, 0.55) 0px 0px 22px"
+    },
+    "force": {
+      "active": true,
+      "x": 704,
+      "y": 204.400146484375,
+      "sx": 550,
+      "sy": 218.39999389648438,
+      "radius": 170,
+      "strength": 96,
+      "trail": 0.42,
+      "count": 1136,
+      "hit": 581,
+      "avg": 35.23,
+      "lastPush": {
+        "hit": 581,
+        "avg": 35.23,
+        "x": 704,
+        "y": 204.400146484375
+      },
+      "dark": true,
+      "glow": 12,
+      "color": "#7dd8ff"
+    }
+  },
+  "shots": [
+    {
+      "name": "before-particle-light.png",
+      "bytes": 521865,
+      "errors": []
+    },
+    {
+      "name": "after-particle-dark-glow.png",
+      "bytes": 538798,
+      "errors": []
+    },
+    {
+      "name": "after-particle-dark-force.png",
+      "bytes": 555912,
+      "errors": []
+    }
+  ],
+  "pixel": {
+    "light": {
+      "brightPct": 98.12,
+      "total": 94000
+    },
+    "dark": {
+      "brightPct": 3.41,
+      "total": 94000
+    }
+  },
+  "errors": []
+}

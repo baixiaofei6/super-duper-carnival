@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>粒子文字 Hero · 鼠标反馈原型</title>
+<style>
+  :root{
+    --bg:#fcfaf8; --card:#f3ede8; --border:#f0ebe5;
+    --ink:#1f2329; --sub:#666; --muted:#999; --accent:#fb8147;
+    --sage:#b1c2a4; --cream:#e8e5d8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink)}
+  body{font-family:Georgia,"PingFang SC","MiSans","Microsoft YaHei",serif;-webkit-font-smoothing:antialiased}
+  .kai{font-family:"LXGW WenKai TC","KaiTi","STKaiti",Georgia,serif}
+
+  /* 顶部公告跑马灯 */
+  .notice{background:#000;color:#fff;font-size:12px;height:34px;display:flex;align-items:center;overflow:hidden;white-space:nowrap}
+  .notice span{display:inline-block;padding-left:100%;animation:marquee 20s linear infinite}
+  @keyframes marquee{to{transform:translateX(-100%)}}
+
+  nav{display:flex;align-items:center;gap:28px;max-width:1260px;margin:0 auto;padding:20px 28px;border-bottom:1px solid var(--border);font-size:14px}
+  nav .brand{font-weight:700;letter-spacing:.02em;margin-right:auto}
+  nav a{color:var(--sub);text-decoration:none;transition:color .2s}
+  nav a:hover{color:var(--accent)}
+  .btn-login{border:1px solid var(--border);background:var(--card);border-radius:999px;padding:8px 16px;cursor:pointer;font-size:13px;color:var(--ink);transition:transform .2s,box-shadow .2s,border-color .2s}
+  .btn-login:hover{border-color:var(--accent);transform:translateY(-2px)}
+
+  /* Hero：粒子层 */
+  #hero{position:relative;height:min(72vh,620px);min-height:420px;overflow:hidden;touch-action:pan-y}
+  #pt{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
+  .hero-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:clamp(2.25rem,4vw,3rem);color:var(--ink);pointer-events:none}
+  .hero-caption{position:absolute;left:0;right:0;top:calc(42% + 110px);text-align:center;pointer-events:none}
+  .hero-caption .sub{color:var(--sub);font-size:16px;letter-spacing:.04em;min-height:24px}
+  .hero-caption .cursor{display:inline-block;width:3px;height:.85em;background:var(--ink);margin-left:4px;vertical-align:baseline;animation:blink 1s step-end infinite}
+  @keyframes blink{50%{opacity:0}}
+  .cta{position:absolute;left:0;right:0;top:calc(42% + 160px);display:flex;gap:12px;justify-content:center;pointer-events:auto}
+  .cta button{width:170px;height:44px;border-radius:999px;font-size:14px;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s;font-family:inherit}
+  .cta .primary{background:var(--accent);border:1px solid var(--accent);color:#fff}
+  .cta .outline{background:transparent;border:1px solid var(--ink);color:var(--ink)}
+  .cta button:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(31,35,41,.12)}
+
+  .hint{position:absolute;left:28px;bottom:20px;font-size:12px;color:var(--muted);display:flex;gap:14px;align-items:center;pointer-events:auto}
+  .hint label{cursor:pointer;user-select:none}
+  .hint input{accent-color:var(--accent)}
+  #field{position:absolute;inset:0;pointer-events:none;display:none}
+
+  /* banner */
+  .banner{max-width:1260px;width:calc(100% - 56px);margin:56px auto 0;height:280px;border-radius:24px;position:relative;overflow:hidden;
+    background:linear-gradient(100deg,var(--cream) 0%,var(--sage) 45%,var(--cream) 100%);background-size:220% 100%;animation:sweep 14s ease-in-out infinite alternate}
+  @keyframes sweep{from{background-position:0% 50%}to{background-position:100% 50%}}
+  .banner::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);transform:translateX(-100%);animation:shine 7s linear infinite}
+  @keyframes shine{to{transform:translateX(100%)}}
+  .banner .grain{position:absolute;inset:0;opacity:.16;background-image:radial-gradient(rgba(0,0,0,.18) .5px,transparent .5px);background-size:4px 4px}
+
+  section{max-width:1260px;margin:0 auto;padding:64px 28px}
+  h2{font-size:1.5rem;font-weight:500;margin:0 0 8px}
+  .sec-sub{color:var(--muted);font-size:13px;margin:0 0 28px}
+  .reveal{opacity:0;transform:translateY(60px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+  .reveal.visible{opacity:1;transform:none}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;min-height:150px;transition:transform .2s,box-shadow .2s}
+  .card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(31,35,41,.07)}
+  .card .tag{display:inline-block;font-size:11px;padding:3px 10px;border-radius:999px;background:#EBE5DC;color:var(--sub)}
+  .card h3{font-size:17px;font-weight:500;margin:14px 0 8px}
+  .card p{font-size:13px;color:var(--sub);line-height:1.8;margin:0}
+
+  /* 占位面板：登录 / 上传 */
+  .panel{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px;margin-top:28px}
+  .panel .warn{font-size:12px;color:var(--muted);border-bottom:1px dashed var(--border);padding-bottom:14px;margin-bottom:20px;line-height:1.7}
+  .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .oauth{border:1px solid var(--border);background:var(--bg);border-radius:999px;padding:10px 20px;font-size:13px;cursor:pointer;font-family:inherit;color:var(--ink);transition:border-color .2s,transform .2s}
+  .oauth:hover{border-color:var(--accent);transform:translateY(-2px)}
+  #drop{margin-top:18px;border:1px dashed var(--border);border-radius:12px;padding:26px;text-align:center;color:var(--sub);font-size:13px;cursor:pointer;background:var(--bg);transition:border-color .2s}
+  #drop.over{border-color:var(--accent)}
+  #preview{margin-top:14px;display:flex;flex-wrap:wrap;gap:10px}
+  #preview img{width:84px;height:84px;object-fit:cover;border-radius:10px;border:1px solid var(--border)}
+  #preview .file{font-size:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--sub)}
+  #toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--ink);color:#fff;font-size:13px;padding:12px 20px;border-radius:999px;opacity:0;transition:.3s;pointer-events:none;z-index:99;max-width:90vw;text-align:center}
+  #toast.show{opacity:1;transform:translate(-50%,0)}
+
+  .cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--ink);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);z-index:98;transition:width .5s cubic-bezier(.23,1,.32,1),height .5s cubic-bezier(.23,1,.32,1),border-color .2s;opacity:.45}
+  footer{background:#000;color:#999;text-align:center;padding:40px 20px;font-size:12px;margin-top:40px}
+
+  @media(max-width:768px){.grid{grid-template-columns:1fr}#hero{height:60vh}.cta{flex-wrap:wrap}.hint{font-size:11px}}
+  @media(prefers-reduced-motion:reduce){
+    .notice span,.banner,.banner::after,.cursor,.reveal{animation:none!important;transition:none!important}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="notice"><span>这是一张「动态效果原型」，不是官网截图 · 粒子参数来自 mimo.mi.com 主 JS chunk 的核实结果 · 登录与上传为前端占位示意</span></div>
+
+<nav>
+  <div class="brand kai">林间</div>
+  <a href="#notes">文章</a><a href="#projects">项目</a><a href="#now">此刻</a><a href="#about">关于</a>
+  <button class="btn-login" id="loginBtn">登录</button>
+</nav>
+
+<div id="hero">
+  <canvas id="pt" aria-hidden="true"></canvas>
+  <div class="hero-fallback kai" id="fallback" hidden>你好，我是林间</div>
+  <div class="hero-caption">
+    <div class="sub kai" id="typing"></div>
+  </div>
+  <div class="cta">
+    <button class="primary" id="cta1">读我的文章</button>
+    <button class="outline" id="cta2">看看我做的</button>
+  </div>
+  <div class="hint">
+    <span>把鼠标扫过文字 → 粒子会朝远离光标的方向散开，且随移动方向拖出一道波</span>
+    <label><input type="checkbox" id="showField"> 显示 120px 力场</label>
+  </div>
+  <canvas id="field" aria-hidden="true"></canvas>
+</div>
+
+<div class="banner"><div class="grain"></div></div>
+
+<section id="notes" class="reveal">
+  <h2>最近在写</h2><p class="sec-sub">滚动进视口时上浮淡入（0.8s 缓出）</p>
+  <div class="grid">
+    <div class="card"><span class="tag">随笔</span><h3>关于慢下来这件事</h3><p>把节奏放低一点，留白多一点。</p></div>
+    <div class="card"><span class="tag">技术</span><h3>Canvas 粒子文字笔记</h3><p>从字形采样到力场反馈的实现记录。</p></div>
+    <div class="card"><span class="tag">读书</span><h3>纸上的温度</h3><p>为什么暖奶油白比纯白更耐看。</p></div>
+  </div>
+</section>
+
+<section id="projects" class="reveal">
+  <h2>我做的东西</h2><p class="sec-sub">模型卡「三行字段」的抽象</p>
+  <div class="grid">
+    <div class="card"><span class="tag">工具</span><h3>FieldCard</h3><p>篇数 / 最近更新 / 状态</p></div>
+    <div class="card"><span class="tag">实验</span><h3>ParticleText</h3><p>粒子数 / 力场半径 / 帧率</p></div>
+    <div class="card"><span class="tag">站点</span><h3>本博客</h3><p>主题 / 内容 / 部署</p></div>
+  </div>
+</section>
+
+<section id="about" class="reveal">
+  <h2>登录与上传</h2><p class="sec-sub">下面只是前端占位，用来看位置与观感</p>
+  <div class="panel">
+    <div class="warn">⚠️ <strong>占位示意，未接后端。</strong>真实的微信 / QQ 登录需要：已审核通过的「网站应用」、AppID/AppSecret、服务端换取 token 与拉取用户资料、备案域名与回调域名、以及一个用户库。上传也需要对象存储或上传接口。当前按钮只弹提示，文件只在浏览器本地预览，刷新即失效。</div>
+    <div class="row">
+      <button class="oauth" data-provider="微信">微信登录</button>
+      <button class="oauth" data-provider="QQ">QQ 登录</button>
+      <span style="font-size:12px;color:var(--muted)">登录后头像与昵称直接取自平台资料</span>
+    </div>
+    <div id="drop">点击选择，或把图片 / 文件拖到这里（仅本地预览）</div>
+    <input type="file" id="file" multiple hidden>
+    <div id="preview"></div>
+  </div>
+</section>
+
+<footer>林间 · 写字，做东西，慢慢来</footer>
+<div class="cursor-ring" id="ring"></div>
+<div id="toast"></div>
+
+<script>
+(function(){
+  'use strict';
+  /* ============================================================
+     粒子文字：参数逐条对应 mimo.mi.com 主 JS chunk 的核实结果
+       (main.4ebebaedca084626.chunk.js, 609383 B)
+     - 离屏 canvas 采样字形 alpha > 40
+     - 粒子数 L = clamp(900, 5200, floor(W*H/90))
+     - 初始散点半径 180*(.35+.75*depth)，delay = 420*seed
+     - 入场 easeOutCubic，时长 1600ms
+     - 平滑指针 g.sx += (g.x-g.sx)*.18
+     - 力场：半径 120，强度 (1-d/120)*40，沿 (p-cursor)/d 推开
+     - 位置 lerp .55；size 1.8 用 fillRect
+     - prefers-reduced-motion 时直接落位且不启动 rAF
+     ============================================================ */
+  var TEXT = '你好，我是林间';
+  var FONT = '"LXGW WenKai TC","KaiTi","STKaiti",Georgia,serif';
+  var INK = '#1f2329', ACCENT = '#fb8147';
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var hero = document.getElementById('hero');
+  var cvs = document.getElementById('pt');
+  var ctx = cvs.getContext('2d');
+  var fieldCvs = document.getElementById('field');
+  var fieldCtx = fieldCvs.getContext('2d');
+  var W=0,H=0,DPR=1,parts=[],raf=null,start=0,entering=false;
+  var ptr = {active:false,x:0,y:0,sx:0,sy:0};
+
+  function clamp(v,a,b){return Math.min(Math.max(v,a),b);}
+
+  function sample(){
+    var off=document.createElement('canvas'), o=off.getContext('2d');
+    var fs=clamp(Math.floor(W*0.072),52,150);
+    o.font='500 '+fs+'px '+FONT;
+    var m=o.measureText(TEXT);
+    var w=Math.ceil(m.width)+48, h=Math.ceil(fs*1.5)+48;
+    off.width=w; off.height=h;
+    o.font='500 '+fs+'px '+FONT;
+    o.textAlign='center'; o.textBaseline='middle'; o.fillStyle='#fff';
+    o.fillText(TEXT,w/2,h/2);
+    var d=o.getImageData(0,0,w,h).data, pts=[], step=3;
+    for(var y=0;y<h;y+=step) for(var x=0;x<w;x+=step){
+      var a=d[(y*w+x)*4+3];
+      if(a>40) pts.push({x:x-w/2+W/2, y:y-h/2+H*0.42, a:a/255});
+    }
+    var L=Math.max(900,Math.min(5200,Math.floor(W*H/90)));
+    var E=Math.max(1,Math.ceil(pts.length/L));
+    var sub=pts.filter(function(_,i){return i%E===0;});
+    parts=sub.map(function(p,i){
+      var n=(9301*i+49297)%233280/233280;
+      var dep=.45+(233*i+97)%1e3/1e3*.9;
+      var ang=n*Math.PI*2, rad=180*(.35+.75*dep);
+      var sx=p.x+Math.cos(ang)*rad+(n-.5)*81;
+      var sy=p.y+Math.sin(ang)*rad+(dep-.9)*81;
+      return {x:sx,y:sy,sx:sx,sy:sy,tx:p.x,ty:p.y,size:1.8,
+              color:(i%17===0?ACCENT:INK),seed:n,depth:dep,delay:420*n,alpha:p.a};
+    });
+    ptr.x=ptr.sx=W/2; ptr.y=ptr.sy=H/2;
+  }
+
+  function resize(){
+    var r=hero.getBoundingClientRect();
+    W=Math.floor(r.width); H=Math.floor(r.height);
+    DPR=Math.min(window.devicePixelRatio||1,2);
+    [cvs,fieldCvs].forEach(function(c){c.width=Math.floor(W*DPR);c.height=Math.floor(H*DPR);c.style.width=W+'px';c.style.height=H+'px';});
+    ctx.setTransform(DPR,0,0,DPR,0,0); fieldCtx.setTransform(DPR,0,0,DPR,0,0);
+    sample();
+    if(reduced){
+      parts.forEach(function(p){p.x=p.tx;p.y=p.ty;});
+      entering=false; drawStatic();
+      document.getElementById('fallback').hidden=false; cvs.style.display='none';
+    }else{
+      document.getElementById('fallback').hidden=true; cvs.style.display='block';
+      start=0; entering=true;
+      if(!raf) raf=requestAnimationFrame(frame);
+    }
+  }
+
+  function drawStatic(){
+    ctx.clearRect(0,0,W,H);
+    parts.forEach(function(p){ctx.globalAlpha=p.alpha;ctx.fillStyle=p.color;ctx.fillRect(p.x-1,p.y-1,2,2);});
+    ctx.globalAlpha=1;
+  }
+
+  function frame(t){
+    if(!start) start=t;
+    ptr.sx+=(ptr.x-ptr.sx)*.18; ptr.sy+=(ptr.y-ptr.sy)*.18;
+    ctx.clearRect(0,0,W,H);
+    var allDone=true, a;
+    for(var i=0;i<parts.length;i++){
+      var p=parts[i], nx=p.tx, ny=p.ty; a=1;
+      if(entering){
+        a=clamp((t-start-p.delay)/1600,0,1);
+        var e=1-Math.pow(1-a,3);
+        nx=p.sx+(p.tx-p.sx)*e; ny=p.sy+(p.ty-p.sy)*e;
+        if(a<1) allDone=false;
+      }else{
+        var tt=.001*t;
+        nx+=.15*Math.sin(.9*tt+10*p.seed)*p.depth;
+        ny+=.15*Math.cos(.75*tt+10*p.depth)*p.depth;
+      }
+      /* === 官网原文力场 ===
+         if(g.active){let e=i.x-g.sx,t=i.y-g.sy,a=Math.hypot(e,t);
+           if(a<120&&a>.1){let i=(1-a/120)*40;n+=e/a*i,o+=t/a*i}} */
+      if(ptr.active){
+        var dx=p.x-ptr.sx, dy=p.y-ptr.sy, dd=Math.hypot(dx,dy);
+        if(dd<120&&dd>.1){var f=(1-dd/120)*40; nx+=dx/dd*f; ny+=dy/dd*f;}
+      }
+      p.x+=(nx-p.x)*.55; p.y+=(ny-p.y)*.55;
+      ctx.globalAlpha=clamp(.35+.65*a,0,1)*p.alpha;
+      ctx.fillStyle=p.color;
+      if(p.size<=2.1) ctx.fillRect(p.x-p.size/2,p.y-p.size/2,p.size,p.size);
+      else{ctx.beginPath();ctx.arc(p.x,p.y,p.size/2,0,2*Math.PI);ctx.fill();}
+    }
+    ctx.globalAlpha=1;
+    if(entering&&allDone) entering=false;
+    // 力场可视化
+    if(document.getElementById('showField').checked){
+      fieldCtx.clearRect(0,0,W,H);
+      fieldCtx.beginPath();fieldCtx.arc(ptr.sx,ptr.sy,120,0,2*Math.PI);
+      fieldCtx.strokeStyle=ptr.active?'rgba(251,129,71,.55)':'rgba(153,153,153,.3)';
+      fieldCtx.lineWidth=1;fieldCtx.stroke();
+    }else fieldCtx.clearRect(0,0,W,H);
+    raf=requestAnimationFrame(frame);
+  }
+
+  /* 指针事件：与官网一致（mouse 进入即 active，离开失活；touch 仅按下期间） */
+  function setXY(e){var r=hero.getBoundingClientRect();ptr.x=e.clientX-r.left;ptr.y=e.clientY-r.top;}
+  hero.addEventListener('pointermove',function(e){if(e.pointerType==='mouse'){setXY(e);ptr.active=true;}else if(e.pointerType!=='mouse'&&ptr.active){setXY(e);}});
+  hero.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse'){setXY(e);ptr.active=true;}});
+  hero.addEventListener('pointerleave',function(e){if(e.pointerType==='mouse')ptr.active=false;});
+  window.addEventListener('pointerup',function(e){if(e.pointerType!=='mouse')ptr.active=false;});
+  window.addEventListener('pointercancel',function(){ptr.active=false;});
+  document.getElementById('showField').addEventListener('change',function(){fieldCvs.style.display=this.checked?'block':'none';});
+
+  /* 打字机副标题 */
+  var subEl=document.getElementById('typing'), subText='写字，做东西，慢慢来';
+  if(reduced){subEl.textContent=subText;}
+  else{
+    var k=0;(function type(){subEl.innerHTML=subText.slice(0,k)+'<span class="cursor"></span>';k++;if(k<=subText.length)setTimeout(type,110);})();
+  }
+
+  /* 滚动显现 */
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('visible');io.unobserve(en.target);}});},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+  /* 自定义光标环 */
+  var ring=document.getElementById('ring');
+  if(!reduced){
+    window.addEventListener('pointermove',function(e){ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';});
+    document.querySelectorAll('a,button,.oauth').forEach(function(el){
+      el.addEventListener('pointerenter',function(){ring.style.width='52px';ring.style.height='52px';ring.style.borderColor='#fb8147';});
+      el.addEventListener('pointerleave',function(){ring.style.width='32px';ring.style.height='32px';ring.style.borderColor='#1f2329';});
+    });
+  }else ring.style.display='none';
+
+  /* toast */
+  var toast=document.getElementById('toast'),tid;
+  function say(msg){toast.textContent=msg;toast.classList.add('show');clearTimeout(tid);tid=setTimeout(function(){toast.classList.remove('show');},2600);}
+  document.querySelectorAll('.oauth').forEach(function(b){
+    b.addEventListener('click',function(){say(b.dataset.provider+'登录：需后端 + 已审核的网站应用，当前为占位示意');});
+  });
+  document.getElementById('loginBtn').addEventListener('click',function(){document.getElementById('about').scrollIntoView({behavior:'smooth'});say('登录面板在页面下方（占位示意）');});
+  document.getElementById('cta1').addEventListener('click',function(){say('文章列表页（未实现）');});
+  document.getElementById('cta2').addEventListener('click',function(){say('项目页（未实现）');});
+
+  /* 上传：仅浏览器本地预览，不落服务器 */
+  var drop=document.getElementById('drop'),file=document.getElementById('file'),prev=document.getElementById('preview');
+  function showFiles(list){
+    Array.prototype.forEach.call(list,function(f){
+      if(/^image\//.test(f.type)){
+        var img=document.createElement('img');img.src=URL.createObjectURL(f);img.title=f.name;
+        img.onload=function(){URL.revokeObjectURL(img.src);};prev.appendChild(img);
+      }else{
+        var d=document.createElement('div');d.className='file';d.textContent=f.name+' · '+(f.size/1024).toFixed(1)+' KB';prev.appendChild(d);
+      }
+    });
+    say('仅在浏览器本地预览，没有上传到服务器');
+  }
+  drop.addEventListener('click',function(){file.click();});
+  file.addEventListener('change',function(){showFiles(file.files);});
+  ['dragenter','dragover'].forEach(function(ev){drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.add('over');});});
+  ['dragleave','drop'].forEach(function(ev){drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.remove('over');});});
+  drop.addEventListener('drop',function(e){if(e.dataTransfer&&e.dataTransfer.files)showFiles(e.dataTransfer.files);});
+
+  /* 字体就绪后重新采样，避免降级字体导致字形错位（官网同样做法） */
+  (document.fonts?document.fonts.ready:Promise.resolve()).then(resize);
+  var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(resize,180);});
+})();
+</script>
+</body>
+</html>

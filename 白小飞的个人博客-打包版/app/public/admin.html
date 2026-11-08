@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>白小飞的个人博客 · 后台</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/assets/app.css">
+</head>
+<body class="admin-page">
+<div class="tech-bg" aria-hidden="true"><div class="orb orb-a"></div><div class="orb orb-b"></div><div class="tech-grid"></div></div>
+<div class="bg-image" id="bg-image" aria-hidden="true"></div>
+<nav class="glass-nav">
+  <a class="brand kai" href="/">白小飞 · 独立后台</a>
+  <span class="nav-title">控制台 / CONSOLE</span>
+  <span id="nav-user" class="nav-user"></span>
+  <a href="/" class="nav-admin" id="back-main">回主站</a>
+</nav>
+<main class="admin-wrap">
+  <section class="panel glass">
+    <p class="eyebrow">CONTROL CENTER</p><h1>站点控制台</h1>
+    <p class="sec-sub">独立后台站点：管理员账号「白小飞」用密码登录；只有管理员能调整网站内容、改密码与自定义背景。主站不提供后台入口。</p>
+    <div id="admin-status" class="status-line"></div>
+  </section>
+
+  <section class="panel glass" id="login-panel">
+    <h2>管理员登录</h2>
+    <p class="sec-sub">这是独立的后台站点；只有管理员用账号密码登录。主站没有后台入口。</p>
+    <div class="admin-login-grid">
+      <label>账号<input id="admin-username" maxlength="40" autocomplete="username"></label>
+      <label>密码<input id="admin-password" type="password" maxlength="128" autocomplete="current-password"></label>
+    </div>
+    <div class="row mt"><button class="primary" id="admin-login" type="button">登录</button><button class="outline" id="admin-logout" type="button">退出</button><span id="login-msg" class="head-note"></span></div>
+  </section>
+
+  <section id="work-panel" hidden>
+    <div class="admin-tabs" id="admin-tabs">
+      <button data-tab="overview" class="active" type="button">概览</button>
+      <button data-tab="settings" type="button">站点设置</button>
+      <button data-tab="layout" type="button">首页编排</button>
+      <button data-tab="posts" type="button">文章</button>
+      <button data-tab="projects" type="button">项目</button>
+      <button data-tab="guestbook" type="button">访客留言</button>
+      <button data-tab="moderation" type="button">评论 / 上传 / 用户</button>
+      <button data-tab="account" type="button">账号安全</button>
+    </div>
+
+    <section class="panel glass tab-panel" data-panel="overview"><h2>概览</h2><div id="overview" class="counts"></div><p class="sec-sub mt">数据来自 /api/admin/overview，可到「文章」「项目」「评论 / 上传 / 用户」逐项管理。</p></section>
+
+    <section class="panel glass tab-panel" data-panel="settings" hidden>
+      <h2>站点身份与文案</h2>
+      <div class="form-grid">
+        <label>站点名<input id="set-name" maxlength="80"></label><label>Hero 大字<input id="set-hero" maxlength="80"></label>
+        <label>Hero 副标题<input id="set-sub" maxlength="120"></label><label>公告 / 标语<input id="set-tagline" maxlength="200"></label>
+        <label>公告条文案<input id="set-announcement" maxlength="200"></label><label>页脚<input id="set-footer" maxlength="200"></label>
+        <label>备案号<input id="set-icp" maxlength="60"></label><label>关于<textarea id="set-about" rows="3" maxlength="600"></textarea></label>
+      </div>
+      <h2 class="mt">视觉与科技感</h2>
+      <div class="form-grid">
+        <label>强调色<input id="set-accent" type="color"></label><label>光晕 A<input id="set-orbA" type="color"></label>
+        <label>光晕 B<input id="set-orbB" type="color"></label><label>光晕 C<input id="set-orbC" type="color"></label>
+        <label class="check"><input id="set-glow" type="checkbox"> 渐变光晕</label>
+        <label class="check"><input id="set-glass" type="checkbox"> 玻璃卡片</label>
+        <label class="check"><input id="set-grid" type="checkbox"> 背景网格</label>
+        <label class="check"><input id="set-halo" type="checkbox"> 力场光环</label>
+        <label>密度<select id="set-density"><option value="compact">紧凑</option><option value="comfortable">舒展</option></select></label>
+        <label>显示模式<select id="set-mode"><option value="light">白天</option><option value="dark">黑夜</option><option value="auto">自动跟随系统</option></select></label>
+        <label>背景色<input id="set-bgColor" type="color"></label>
+        <label>文字色<input id="set-textColor" type="color"></label>
+        <label>卡片色<input id="set-cardColor" type="color"></label>
+      </div>
+      <h2 class="mt">背景图片（上传后自动填入）</h2>
+      <div class="row"><input id="set-bgImage" placeholder="/uploads/xxx.png 或 https://..." maxlength="300"><input type="file" id="bg-file" accept="image/*"><button class="outline" id="bg-clear" type="button">清除背景</button></div>
+      <div class="bg-preview" id="bg-preview">背景预览</div>
+      <h2 class="mt">粒子力场</h2>
+      <div class="form-grid">
+        <label>半径 px<input id="set-radius" type="number" min="20" max="400"></label>
+        <label>强度<input id="set-strength" type="number" min="20" max="400"></label>
+        <label>拖尾惯性<input id="set-trail" type="number" min="0.05" max="1" step="0.01"></label>
+      </div>
+      <h2 class="mt">链接（每行 标签 | URL，最多 20 条）</h2>
+      <textarea id="set-links" rows="5" placeholder="GitHub | https://github.com/"></textarea>
+      <div class="row mt"><button class="primary" id="settings-save" type="button">保存全部设置</button><button class="outline" id="settings-reset" type="button">重新载入</button><span id="settings-msg" class="head-note"></span></div>
+    </section>
+
+    <section class="panel glass tab-panel" data-panel="layout" hidden>
+      <h2>首页模块：显隐与顺序</h2><p class="sec-sub">用 ↑ ↓ 调整顺序，勾选控制显示；保存后前台 /api/bootstrap 立即生效。</p>
+      <div id="layout-list" class="layout-list"></div>
+      <div class="row mt"><button class="primary" id="layout-save" type="button">保存编排</button><span id="layout-msg" class="head-note"></span></div>
+    </section>
+
+    <section class="panel glass tab-panel" data-panel="posts" hidden>
+      <h2>新建 / 更新文章（slug 相同即更新）</h2>
+      <div class="form-grid">
+        <label>标题<input id="post-title" placeholder="标题（必填）"></label><label>slug<input id="post-slug" placeholder="可留空"></label>
+        <label>日期<input id="post-date" type="date"></label><label>标签<input id="post-tags" placeholder="逗号分隔"></label>
+        <label>摘要<input id="post-excerpt"></label><label>封面 URL<input id="post-cover"></label>
+        <label class="wide">正文 HTML<textarea id="post-body" rows="5"></textarea></label>
+      </div>
+      <button class="primary" id="post-create" type="button">发布 / 更新文章</button>
+      <h2 class="mt">已有文章</h2><div id="admin-posts" class="manage-list"></div>
+    </section>
+
+    <section class="panel glass tab-panel" data-panel="projects" hidden>
+      <h2>新建项目</h2>
+      <div class="row"><input id="project-title" placeholder="项目名"><input id="project-tag" placeholder="标签"><input id="project-desc" placeholder="一句描述"><input id="project-cover" placeholder="封面 URL"><button class="primary" id="project-create" type="button">添加项目</button></div>
+      <h2 class="mt">已有项目</h2><div id="admin-projects" class="manage-list"></div>
+    </section>
+
+    <section class="panel glass tab-panel" data-panel="guestbook" hidden>
+      <h2>访客留言板（全员可见）</h2>
+      <p class="sec-sub">主站留言板的所有留言。可删除单条，也可一次清空；清空不可撤销。</p>
+      <div class="row"><button class="btn-danger" id="guestbook-clear" type="button">清空全部留言</button><span id="guestbook-msg" class="head-note"></span></div>
+      <div id="admin-guestbook" class="manage-list"></div>
+    </section>
+
+    <section class="panel glass tab-panel" data-panel="account" hidden>
+      <h2>修改管理员密码</h2>
+      <p class="sec-sub">密码用 scrypt + 随机 salt 存哈希，不存明文。改密后当前会话仍有效。</p>
+      <div class="form-grid">
+        <label>原密码<input id="pw-old" type="password" maxlength="128" autocomplete="current-password"></label>
+        <label>新密码（6..128 字符）<input id="pw-new" type="password" maxlength="128" autocomplete="new-password"></label>
+        <label>确认新密码<input id="pw-new2" type="password" maxlength="128" autocomplete="new-password"></label>
+      </div>
+      <button class="primary" id="pw-save" type="button">修改密码</button><span id="pw-msg" class="head-note"></span>
+    </section>
+
+    <section class="panel glass tab-panel" data-panel="moderation" hidden>
+      <h2>上传文件</h2><input type="file" id="admin-file" multiple><div id="admin-uploads" class="manage-list"></div>
+      <h2 class="mt">评论</h2><div id="admin-comments" class="manage-list"></div>
+      <h2 class="mt">用户与角色</h2><div id="admin-users" class="manage-list"></div>
+    </section>
+  </section>
+</main>
+<div id="toast"></div>
+<script src="/assets/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="白小飞的个人博客">
+<title>白小飞的个人博客</title>
+<link rel="icon" href="data:,">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="/api/rss">
+<link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+<div class="tech-bg" aria-hidden="true"><div class="orb orb-a"></div><div class="orb orb-b"></div><div class="orb orb-c"></div><div class="tech-grid"></div><div class="scanline"></div></div>
+<div class="bg-image" id="bg-image" aria-hidden="true"></div>
+<div class="notice"><span id="notice">正在载入站点……</span></div>
+<nav class="glass-nav">
+  <a class="brand kai" href="#/">白小飞的个人博客</a>
+  <a href="#/notes">文章</a><a href="#/projects">项目</a><a href="#/guestbook">留言板</a><a href="#/about">关于</a>
+  <span class="theme-switch" id="theme-switch" role="group" aria-label="显示模式">
+    <button type="button" data-mode="light">☀ 白天</button>
+    <button type="button" data-mode="dark">☾ 黑夜</button>
+    <button type="button" data-mode="auto">◐ 自动</button>
+  </span>
+  <span id="nav-user" class="nav-user" hidden></span>
+</nav>
+
+<main id="app">
+  <div id="hero">
+    <canvas id="pt" aria-hidden="true"></canvas>
+    <div class="hero-fallback kai" id="fallback" hidden>你好，我是白小飞</div>
+    <div class="hero-caption"><div class="sub kai" id="typing"></div></div>
+    <div class="cta">
+      <button class="primary" id="cta1" type="button">读我的文章</button>
+      <button class="outline" id="cta2" type="button">看看我做的</button>
+    </div>
+    <div class="hint">
+      <span>把鼠标扫过文字 → 粒子会明显朝远离光标的方向散开</span>
+      <label><input type="checkbox" id="showField"> 显示力场</label>
+    </div>
+    <canvas id="field" aria-hidden="true"></canvas>
+  </div>
+
+  <div class="signal-strip" id="signal-strip"><span class="pulse-dot"></span><span id="signal-text">站点运行中</span><span class="strip-meta" id="signal-meta"></span></div>
+
+  <section id="home-view" class="reveal">
+    <div id="updates-group" class="module-group">
+      <div class="section-head"><div><p class="eyebrow">LATEST / 最新动态</p><h2>最近在写</h2></div><a class="more" href="#/notes">查看全部 →</a></div>
+      <div class="updates" id="updates-grid"></div>
+    </div>
+    <div id="series-group" class="module-group">
+      <div class="section-head mt"><div><p class="eyebrow">FIELD CARDS / 我在写的</p><h2>专栏与实验</h2></div><span class="head-note" id="series-note"></span></div>
+      <div class="grid field-grid" id="field-grid"></div>
+    </div>
+    <div id="projects-group" class="module-group">
+      <div class="section-head mt"><div><p class="eyebrow">MATRIX / 我做的东西</p><h2>项目矩阵</h2></div><span class="head-note" id="project-note"></span></div>
+      <div class="project-matrix" id="project-matrix"></div>
+    </div>
+    <div id="stats-group" class="module-group">
+      <div class="section-head mt"><div><p class="eyebrow">TELEMETRY / 站点状态</p><h2>此刻</h2></div><span class="head-note">实时来自 /api/bootstrap 与 /api/posts</span></div>
+      <div class="stats" id="stats"></div>
+    </div>
+    <div id="links-group" class="module-group">
+      <div class="section-head mt"><div><p class="eyebrow">ELSEWHERE / 在别处</p><h2>链接</h2></div></div>
+      <div class="links" id="site-links"></div>
+    </div>
+    <div id="guestbook-group" class="module-group">
+      <div class="section-head mt"><div><p class="eyebrow">GUESTBOOK / 全员可见</p><h2>访客留言</h2></div><span class="head-note" id="guestbook-count"></span></div>
+      <div class="panel glass guestbook-panel">
+        <p class="warn">所有留言对所有人可见；不用登录也能写，填个昵称就行。管理员可在独立后台删除某条或清空。</p>
+        <div class="guestbook-form"><input id="gb-nickname" maxlength="40" placeholder="你的昵称"><textarea id="gb-text" rows="2" maxlength="1000" placeholder="写点什么，留给大家看见……"></textarea><button class="primary" id="gb-submit" type="button">发表留言</button></div>
+        <div id="guestbook-list" class="guestbook-list"></div>
+      </div>
+    </div>
+    <div id="about-group" class="module-group">
+      <div class="about-card glass" id="about-panel"><p class="eyebrow">ABOUT</p><h2>关于这个站点</h2><p class="about-text" id="about-text"></p></div>
+    </div>
+  </section>
+
+  <section id="notes-view" class="reveal" hidden>
+    <div class="section-head"><div><p class="eyebrow">ARCHIVE</p><h2>全部文章</h2></div><span class="head-note" id="notes-sub"></span></div>
+    <div class="list" id="post-list"></div>
+  </section>
+
+  <section id="post-view" class="reveal article" hidden>
+    <a class="back" href="#/notes">← 返回文章列表</a>
+    <h1 id="post-title"></h1><p class="post-meta" id="post-meta"></p>
+    <div class="body glass" id="post-body"></div>
+    <div class="panel glass"><h2>留言</h2>
+      <div class="comment-form"><input id="comment-nickname" maxlength="40" placeholder="昵称（未登录时填写）"><textarea id="comment-text" rows="3" maxlength="1000" placeholder="不用登录也能留言，最多 1000 字"></textarea><button id="comment-submit" class="primary" type="button">发表留言</button></div>
+      <div id="comment-list" class="comment-list"></div>
+    </div>
+  </section>
+
+  <section id="projects-view" class="reveal" hidden>
+    <div class="section-head"><div><p class="eyebrow">PROJECTS</p><h2>项目陈列</h2></div></div>
+    <div class="grid" id="all-projects"></div>
+  </section>
+
+  <section id="guestbook-view" class="reveal" hidden>
+    <div class="section-head"><div><p class="eyebrow">GUESTBOOK / 全员可见</p><h2>访客留言板</h2></div><span class="head-note" id="guestbook-view-count"></span></div>
+    <div class="panel glass guestbook-panel">
+      <p class="warn">不用登录也可留言，填昵称即可；所有留言对所有人可见。管理员可删除单条或全部。</p>
+      <div class="guestbook-form"><input id="gb-nickname-view" maxlength="40" placeholder="你的昵称"><textarea id="gb-text-view" rows="3" maxlength="1000" placeholder="写点什么……"></textarea><button class="primary" id="gb-submit-view" type="button">发表留言</button></div>
+      <div id="guestbook-list-view" class="guestbook-list"></div>
+    </div>
+  </section>
+
+  <section id="about-view" class="reveal" hidden>
+    <div class="section-head"><div><p class="eyebrow">ABOUT</p><h2>关于这个站点</h2></div></div>
+    <p class="about-text" id="about-full"></p>
+    <div class="section-head mt"><div><p class="eyebrow">ELSEWHERE</p><h2>在别处</h2></div></div><div class="links" id="about-links"></div>
+    <div class="panel glass">
+      <h2>关于内容管理</h2>
+      <p class="warn">站点内容只由管理员在独立后台维护；主站不开放上传或内容编辑。想留言请到「留言板」，所有留言对所有人可见。</p>
+      <a class="more" href="#/guestbook">去留言板 →</a>
+    </div>
+  </section>
+</main>
+
+<footer><span id="footer-text"></span><span id="footer-icp"></span></footer>
+<div class="cursor-ring" id="ring"></div>
+<div id="toast"></div>
+<script src="/assets/particle.js"></script>
+<script src="/assets/app.js"></script>
+</body>
+</html>

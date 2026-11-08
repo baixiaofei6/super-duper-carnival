@@ -1,0 +1,44 @@
+{
+  "edge": "Edg/157.0.4341.42",
+  "probe": {
+    "dark": true,
+    "glow": 12,
+    "color": "#7dd8ff",
+    "lastDraw": {
+      "groups": 8,
+      "rects": 1136,
+      "fills": 16
+    }
+  },
+  "pushed": {
+    "maxDisp": 85.57,
+    "drawCalls": 576,
+    "lastDraw": {
+      "groups": 8,
+      "rects": 1136,
+      "fills": 16
+    },
+    "forceActive": true
+  },
+  "settled": {
+    "maxDisp": 0.32,
+    "drawCalls": 960,
+    "animating": false,
+    "forceActive": false
+  },
+  "old": {
+    "brightPct": 3.13,
+    "cyanPct": 5.32,
+    "total": 77550
+  },
+  "final": {
+    "brightPct": 6.13,
+    "cyanPct": 3.77,
+    "total": 77550
+  },
+  "errors": [],
+  "shots": {
+    "scattered": 527648,
+    "returned": 522245
+  }
+}

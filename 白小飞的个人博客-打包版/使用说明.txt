@@ -1,0 +1,93 @@
+﻿白小飞的个人博客 · 使用说明
+========================================
+
+【文件夹说明】
+白小飞的个人博客.exe  双击启动网站（会自动打开主站）
+runtime\node.exe      内置 Node 运行环境，不需要另外安装 Node.js
+app\                  网站程序（server.js / public / lib 等）
+docs\                 设计文档与验收截图证据
+tools\               公网部署工具（见文末说明）
+启动器源码.cs          启动器源码，可自行重新编译
+
+【怎么打开】
+1. 双击本文件夹里的「白小飞的个人博客.exe」。
+2. 会弹出一个黑色控制台窗口，显示主站与后台地址；浏览器会自动打开主站。
+3. 保持控制台窗口开着，网站就在运行；关掉窗口即停止网站。
+4. 端口被占用时，启动器会自动换空闲端口，并以窗口里显示的地址为准。
+   默认一般是 8787 / 8788，若被占用请看控制台输出。
+
+【网址】
+主站（访客看）：    http://127.0.0.1:8787/
+管理界面（单独打开）：http://127.0.0.1:8788/
+访客留言板：        http://127.0.0.1:8787/#/guestbook
+健康检查接口：      http://127.0.0.1:8787/api/health
+
+【管理员账号】
+账号：白小飞
+初始密码：13135566867.
+（末尾英文句点是密码的一部分）
+登录后可在「账号安全」页修改管理员密码。密码用 scrypt + 随机 salt 存哈希，不存明文。
+首次启动会在 app\data\data.json 里创建管理员；删除 app\data 后再启动会回到初始密码。
+主站没有后台入口，必须单独打开上面的管理界面地址。
+
+【主要功能】
+- 白天 / 黑夜 / 自动跟随系统三种显示模式，切到黑夜时粒子文字会发光。
+- 鼠标扫过 Hero 粒子会散开，停手后自动回到字形原位。
+- 访客留言板全员可见，不用登录，填昵称即可留言；管理员可删单条或清空全部。
+- 文章评论也支持匿名昵称。
+- 只有管理员能调整网站内容：发文、项目、设置、背景图、上传、删除、角色。
+- 独立后台可改站点文案、背景图、背景色 / 文字色 / 卡片色、首页模块显隐与顺序、粒子参数。
+- 文章 RSS：http://127.0.0.1:8787/api/rss
+
+【数据在哪 / 怎么备份】
+所有文章、项目、留言、上传文件、设置、管理员密码都在 app\data\ 文件夹。
+备份：复制整个 app\data。换电脑时把这个文件夹一起带走即可。
+注意：这是单进程 JSON 文件存储，别同时开两个 exe 指向同一个 data 目录。
+
+【常见问题】
+- 双击后没反应：保持文件夹完整，确认 runtime\node.exe 与 app\server.js 都在；也可安装 Node.js 后再试。
+- 浏览器没自动打开：手动复制控制台里显示的「主站」地址到浏览器。
+- 改了密码忘了：删除 app\data 文件夹后重新启动，会恢复初始密码（同时会清空文章、留言与上传）。
+- 想自检：在 app 目录执行 runtime\..\runtime\node.exe test\smoke.js（或用系统 node 执行 node test\smoke.js）。
+
+========================================
+【如何免费部署到公网（不花一分钱）】
+========================================
+结论：用 Cloudflare 的「Quick Tunnel / 快速隧道」。它不需要买服务器、不需要域名、不需要备案，
+免费且不用 Cloudflare 账号；缺点是每次启动会得到一个随机的 https://xxx.trycloudflare.com 地址，
+关掉隧道或关机就失效，适合临时展示 / 演示，不适合长期稳定运营。
+
+步骤：
+1. 先双击「白小飞的个人博客.exe」，确认本机 http://127.0.0.1:8787/ 能打开。
+2. 下载官方 cloudflared-windows-amd64.exe：
+   https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe
+   放到本文件夹 tools\ 里，改名为 cloudflared.exe。
+   注意：tools\cloudflared.exe.incomplete 是本机下载时断线留下的不完整文件，
+   **不能运行**，必须删掉并重新下载完整的官方 exe。
+3. 在本文件夹地址栏输入 cmd 回车，执行（端口按控制台实际显示替换）：
+   tools\cloudflared.exe tunnel --url http://127.0.0.1:8787
+4. 命令窗口会打印一行 https://xxxx.trycloudflare.com ，那就是免费公网主站地址，发给别人即可访问。
+5. 后台也开一条隧道（另开一个 cmd 窗口）：
+   tools\cloudflared.exe tunnel --url http://127.0.0.1:8788
+   得到第二个 https://xxxx.trycloudflare.com 就是管理界面地址。
+   两条隧道要同时开着；本机 exe 和这两个 cloudflared 窗口都不能关。
+
+其他免费但更折腾的备选：
+- localhost.run：本机有 SSH 客户端时可用 ssh -R 80:localhost:8787 nokey@localhost.run，也是临时随机域名。
+- Cloudflare 正式 Tunnel / 免费套餐：需要 Cloudflare 账号和一个域名（域名本身通常要钱），可固定地址，但不符合「一分钱不花」的临时方案。
+- GitHub Pages / Vercel / Netlify 免费静态托管：只能放纯静态页面，放不了这个带登录、留言、上传、管理员后台的 Node 服务端，所以本程序不能直接用它们。
+
+公网前的安全提醒（务必看）：
+- 当前 config 里 providers.dev.enabled=true 且密码是写死的初始值，公网暴露前请先登录后台改密码。
+- 建议把 app\config.example.json 复制成 app\config.json 后，把 providers.dev.enabled 改成 false，
+  并把 adminAccount.password 改成你自己的强密码（仅首次创建管理员时生效；之后请用后台「账号安全」改密）。
+- Quick Tunnel 地址是公开的，任何人拿到后台地址都能尝试登录；后台地址不要随便发。
+- 本机 JSON 存储只适合单进程 / 小规模；长期公网运行建议换数据库、HTTPS 终结点、正式域名与备案（国内主机）。
+- 免费方案没有 SLA：关机、断网、隧道超时都会让别人访问不到。
+
+【本机已核实 / 未核实，如实说明】
+已核实：本机 Node v24.14.1、.NET Framework csc.exe 存在；双击启动器实测 READY 8787 + ADMIN READY 8788，
+主站 /api/health 返回 200；cloudflared 官方 GitHub release /latest 链接返回 302。
+未核实：本机下载 cloudflared 时网络中断，只拿到 9424576 字节残片，因此**没有在本机实际跑通隧道**；
+上面的隧道命令来自 Cloudflare Quick Tunnel 的公开用法，需要你下载完整 exe 后按窗口输出的地址使用。
+也没有核实 localhost.run 当前可用性；它只是备选，不保证一直免费开放。

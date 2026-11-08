@@ -1,0 +1,57 @@
+{
+  "edge": "Edg/157.0.4341.42",
+  "measurements": [
+    {
+      "mode": "dark",
+      "scene": "idle",
+      "wallMs": 2664,
+      "fillCalls": 2272,
+      "fillMs": 4.2,
+      "avgFillUs": 1.85,
+      "clearCalls": 3,
+      "particles": 1136,
+      "dark": true,
+      "glow": 12,
+      "animating": false
+    },
+    {
+      "mode": "dark",
+      "scene": "mouse-30-events",
+      "wallMs": 2665,
+      "fillCalls": 34080,
+      "fillMs": 37.7,
+      "avgFillUs": 1.11,
+      "clearCalls": 30,
+      "particles": 1136,
+      "dark": true,
+      "glow": 12,
+      "animating": true
+    },
+    {
+      "mode": "light",
+      "scene": "idle",
+      "wallMs": 1001,
+      "fillCalls": 14768,
+      "fillMs": 3.9,
+      "avgFillUs": 0.26,
+      "clearCalls": 25,
+      "particles": 1136,
+      "dark": false,
+      "glow": 0,
+      "animating": false
+    },
+    {
+      "mode": "light",
+      "scene": "mouse-30-events",
+      "wallMs": 620,
+      "fillCalls": 54528,
+      "fillMs": 14.6,
+      "avgFillUs": 0.27,
+      "clearCalls": 66,
+      "particles": 1136,
+      "dark": false,
+      "glow": 0,
+      "animating": true
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "port": 8787,
+  "baseUrl": "http://127.0.0.1:8787",
+  "sessionDays": 30,
+  "secureCookies": false,
+  "cors": false,
+  "site": {
+    "name": "白小飞的个人博客",
+    "hero": "你好，我是白小飞",
+    "sub": "写代码，做东西，记录一点想法",
+    "tagline": "与你同行，探索一点有意思的事",
+    "about": "这里是白小飞的个人博客。写一点技术笔记，记一些做过的东西，也放些没想清楚的想法。不追热点，慢慢来。",
+    "footer": "© 白小飞的个人博客 · 用 warmth 和一点点好奇心做的",
+    "icp": "",
+    "links": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/"
+      },
+      {
+        "label": "Hugging Face",
+        "url": "https://huggingface.co/"
+      },
+      {
+        "label": "Email",
+        "url": "mailto:hello@example.com"
+      },
+      {
+        "label": "RSS",
+        "url": "/api/rss"
+      }
+    ],
+    "announcement": "白小飞的个人博客 · 支持白天 / 黑夜 / 自动跟随 · 访客留言板已开放",
+    "theme": {
+      "accent": "#49b1f5",
+      "glow": true,
+      "glass": true,
+      "grid": true,
+      "density": "compact",
+      "orbA": "#cfebf3",
+      "orbB": "#faeeff",
+      "orbC": "#e8e5d8",
+      "mode": "auto",
+      "bgImage": "",
+      "bgColor": "",
+      "textColor": "",
+      "cardColor": ""
+    },
+    "heroFx": {
+      "radius": 170,
+      "strength": 96,
+      "trail": 0.42,
+      "halo": true
+    }
+  },
+  "admin": {
+    "provider": "",
+    "openid": ""
+  },
+  "providers": {
+    "dev": {
+      "enabled": true
+    },
+    "mini": {
+      "enabled": false,
+      "appid": "",
+      "secret": ""
+    },
+    "wechat": {
+      "enabled": false,
+      "appid": "",
+      "secret": ""
+    },
+    "qq": {
+      "enabled": false,
+      "appid": "",
+      "appkey": ""
+    }
+  },
+  "upload": {
+    "maxBytes": 20971520,
+    "extensions": [
+      "png",
+      "jpg",
+      "jpeg",
+      "gif",
+      "webp",
+      "pdf",
+      "txt",
+      "md",
+      "json",
+      "zip",
+      "mp3",
+      "mp4",
+      "docx",
+      "xlsx",
+      "pptx"
+    ]
+  },
+  "adminPort": 8788,
+  "adminAccount": {
+    "username": "白小飞",
+    "password": "13135566867."
+  }
+}
